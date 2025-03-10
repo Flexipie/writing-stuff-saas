@@ -26,6 +26,7 @@ class DocumentInDBBase(DocumentBase):
     id: int
     file_path: str
     file_size: int
+    chunk_count: Optional[int] = None
     user_id: int
     created_at: datetime
     updated_at: Optional[datetime] = None

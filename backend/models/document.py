@@ -16,6 +16,7 @@ class Document(Base):
     file_path = Column(String, nullable=False)  # Path to the file in storage
     file_type = Column(String, nullable=False)  # PDF, TXT, etc.
     file_size = Column(Integer, nullable=False)  # Size in bytes
+    chunk_count = Column(Integer, nullable=True)  # Number of chunks in the document
     user_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
