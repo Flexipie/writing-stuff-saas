@@ -1,0 +1,55 @@
+
+services:
+  # Backend service
+  backend:
+    build: ./backend
+    container_name: writingstuff-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/writingstuff
+    depends_on:
+      - db
+    networks:
+      - writingstuff-network
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Frontend service
+  frontend:
+    build: ./frontend
+    container_name: writingstuff-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - writingstuff-network
+    # Development mode
+    command: npm run dev -- --host 0.0.0.0 
+
+  # Database service
+  db:
+    image: postgres:15
+    container_name: writingstuff-db
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: writingstuff
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - writingstuff-network
+
+volumes:
+  postgres_data:
+
+networks:
+  writingstuff-network:
