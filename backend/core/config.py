@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 # Load environment variables from .env file
 load_dotenv()
@@ -23,8 +23,8 @@ class Settings(BaseSettings):
     
     # Pinecone settings
     PINECONE_API_KEY: str = os.getenv("PINECONE_API_KEY", "")
-    PINECONE_ENVIRONMENT: str = os.getenv("PINECONE_ENVIRONMENT", "")
-    PINECONE_INDEX_NAME: str = os.getenv("PINECONE_INDEX_NAME", "writingstuff")
+    PINECONE_ENVIRONMENT: str = os.getenv("PINECONE_ENVIRONMENT", "us-west-2")
+    PINECONE_INDEX_NAME: str = os.getenv("PINECONE_INDEX_NAME", "writingclerk")
     
     # AWS settings (for S3)
     AWS_ACCESS_KEY_ID: str = os.getenv("AWS_ACCESS_KEY_ID", "")
